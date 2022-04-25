@@ -1,0 +1,57 @@
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+ <!-- Base postgres financiero -->
+ 
+	<persistence-unit name="siasPU"
+		transaction-type="JTA">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<jta-data-source>java:/siasDS</jta-data-source>
+		
+		<class>ec.gob.mdg.model.Comprobante</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>		
+		<properties>
+			<property
+				name="javax.persistence.schema-generation.database.action"
+				value="none" />
+			<property name="javax.persistence.sql-load-script-source"
+				value="META-INF/data.sql" />
+		</properties>
+	</persistence-unit>
+
+
+ <!-- Base oracle control-->
+ 
+	<persistence-unit name="controlPU"
+		transaction-type="JTA">
+		<jta-data-source>java:/cyfDS</jta-data-source>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property
+				name="javax.persistence.schema-generation.database.action"
+				value="none" />
+			<property name="javax.persistence.sql-load-script-source"
+				value="META-INF/data.sql" />
+		</properties>
+	</persistence-unit>
+	
+ <!-- Base oracle contravenciones-->
+ 
+	<persistence-unit name="contraPU"
+		transaction-type="JTA">
+		<jta-data-source>java:/contraDS</jta-data-source>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property
+				name="javax.persistence.schema-generation.database.action"
+				value="none" />
+			<property name="javax.persistence.sql-load-script-source"
+				value="META-INF/data.sql" />
+		</properties>
+	</persistence-unit>
+
+
+</persistence>

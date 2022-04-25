@@ -1,0 +1,91 @@
+#contenido {
+    /*    padding-top: 20%;*/
+    width: 95%;
+    margin-left: 5.5%;
+    margin-right:5.5%;
+    border: 1px solid #04B45F;
+    padding-left: 9%;
+    padding-right: 9%;
+    padding-bottom: 20px;
+    /*background: #EBF5FB;*/
+}
+/*
+.combosAccion { 
+    width: 850px !important;
+    font-size: 10px !important;
+}
+*/
+
+.alinear{
+	text-align: right;
+	
+	
+}
+
+.ui-selectonemenu.form-control {
+    color: #555 !important;
+    display: block !important;
+    margin-bottom: 0 !important;
+    padding: 5px 10px !important;
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+}
+
+.negrita {
+	font-weight: bold !important;
+}
+
+.radius-none {
+    border-radius: 0 !important;
+}
+
+.ui-selectonemenu.form-control .ui-selectonemenu-trigger {
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 100%;
+    padding: 0 5px;
+    cursor: pointer;
+    position: absolute;
+    margin: 0 !important;
+    border: none !important;
+    margin-top: 5px !important;
+    background: transparent !important;
+}
+.ui-selectonemenu .ui-selectonemenu-label {
+    
+    /*border: none;*/
+    display: block;
+    cursor: pointer;
+    text-align: left;
+    overflow: hidden;
+    margin-bottom: 0px;
+    white-space: nowrap;
+    font-weight: normal;    
+    
+}
+
+.ui-selectonemenu .ui-selectonemenu-label.ui-inputfield.ui-corner-all {
+    text-overflow: ellipsis;
+}
+
+.ui-inputfield {
+    margin: 0;
+    padding: 5px;
+    background: #ffffff;
+    font-weight: normal;
+    outline: medium none;
+    box-shadow: inset 0 0 0 #8f8f8f!important;
+    -webkit-box-shadow: inset 0 0 0 #8f8f8f!important;
+}
+
+.boton {
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+}
+
+.ui-iconos {
+  width: 50px !important;
+  font-size: 50px !important;
+}

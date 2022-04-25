@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+	<link href="./resources/css/index.css" rel="stylesheet" type="text/css" />
+	<h:outputStylesheet library="css" name="index.css" />
+	<title>Bienvenido(a)</title>
+</h:head>
+
+<body>
+	<div id="principal"
+		style="background-image: url('resources/images/fondo.png'); background-repeat: no-repeat; background-size: 100%; background-position-x: 20%; background-position-y: 5%">
+		<h:form id="cuadrado">
+			<p:growl id="mensaje" autoUpdate="false" severity="warn, fatal"
+				showSummary="true" showDetail="true" />
+
+			<h:panelGrid id="pgDatosUsuario" columns="3" cellpadding="8"
+				style="padding-top: 0%">
+				<h:column>
+					<h:panelGrid id="panel" columns="1" cellpadding="5" cellspacing="1"
+						style="padding-right: 50px; margin: 0 auto;">
+
+						<p:outputLabel for="txtLogin" value="Usuario:" />
+						<h:inputText id="txtLogin" value="#{indexBean.us.username}"
+							required="true" requiredMessage="Campo requerido" />
+						<p:message for="txtLogin" />
+
+						<p:outputLabel for="txtContrasena" value="Contraseña:" />
+						<h:inputSecret id="txtContrasena"
+							value="#{indexBean.us.password}" required="true"
+							requiredMessage="Campo es requerido" />
+						<p:message for="txtContrasena" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="1" cellpadding="5" cellspacing="1"
+						style="padding-right: 50px; margin: 0 auto;">
+						<p:commandButton icon="ui-icon-key" value="Iniciar Sesión"
+							action="#{indexBean.login()}"
+							update="pgDatosUsuario,txtLogin,txtContrasena, mensaje" />
+					</h:panelGrid>
+					<br />
+					<h:panelGrid columns="1" cellpadding="5" cellspacing="1"
+						style="padding-right: 30px; margin: 0 auto;">
+						<p:commandLink icon="ui-icon-key" value="Restablecer Contraseña"
+							action="olvidoContrasenia?faces-redirect=true" immediate="true"
+							style="padding-right: 30px" />
+					</h:panelGrid>
+
+
+				</h:column>
+
+				<div
+					style="border-left: 3px solid #77BAFF; width: 1px; height: 180px;"></div>
+
+			</h:panelGrid>
+		</h:form>
+	</div>
+</body>
+</html>

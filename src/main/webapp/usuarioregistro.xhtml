@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:body>
+<!-- <ui:composition template="/WEB-INF/templates/master.xhtml"> -->
+<!-- 		<ui:define name="content"> -->
+			<h:form id="usuarios"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+				<h2 style="color: #003778; text-align: center">REGISTRAR
+					USUARIOS</h2>
+				<p:growl id="growl" showDetail="true" sticky="true">
+					<p:autoUpdate />
+				</p:growl>
+
+				<p:panel >
+					<p:panelGrid id="panel" columns="1" cellpadding="5" cellspacing="1"
+						style="padding-right: 100%; margin: 0 auto;">
+
+						<p:column style="border-style: hidden; width:130px;">Identificación: </p:column>
+						<p:column style="border-style: hidden;">
+							<p:inputText id="txtCi" maxlength="10"
+								placeholder="Ingrese la cédula "
+								value="#{usuarioBean.usuario.username}">
+								<p:ajax event="valueChange"
+									listener="#{usuarioBean.consultaIdentificacion(usuarioBean.usuario.username)}"
+									update="@form" />								
+							</p:inputText>
+							<p:message for="txtCi" display="icon" />
+						</p:column>
+						
+						<p:commandButton id="btnguardar1" value="Guardar1"
+							icon="fa fa-fw fa-floppy-o"
+							actionListener="#{usuarioBean.consultaIdentificacion(usuarioBean.usuario.username)}" process="@form"
+							update=" @this" >
+						</p:commandButton>
+						
+
+						<p:column style="border-style: hidden; width:130px;">Nombres: </p:column>
+						<p:column style="border-style: hidden;">
+							<p:inputText id="txtNombres" disabled="true"
+								value="#{usuarioBean.usuarioRegCivil.nombre}"
+								style="width:300px;">
+							</p:inputText>
+							<p:message for="txtNombres" display="text" />
+						</p:column>
+
+					</p:panelGrid>
+
+					<p:panelGrid id="pgDatosUsuario" rendered="#{usuarioBean.render}"
+						columns="2" cellpadding="5" cellspacing="1"
+						style="padding-right: 50px; margin: 0 auto;">
+
+						<p:column style="border-style: hidden; width:130px;">Título Académico: </p:column>
+						<p:column style="border-style: hidden;">
+							<p:selectOneMenu id="cboTitulo"
+								value="#{usuarioBean.usuario.tipoTituloAcademico}" effect="fade"
+								converter="omnifaces.SelectItemsConverter" autoWidth="false"
+								filter="true" filterMatchMode="startsWith" tyle="width:100px">
+								<f:selectItem itemLabel="- Seleccione -" />
+								<f:selectItems value="#{usuarioBean.listaTituloAcademico}"
+									var="e" itemLabel="#{e.nombre}" itemValue="#{e}" />
+							</p:selectOneMenu>
+							<p:messages for="cboTitulo" />
+						</p:column>
+
+						<p:column style="border-style: hidden; width:130px;">Teléfono: </p:column>
+						<p:column style="border-style: hidden;">
+							<p:inputText id="txtTelefono" maxlength="10"
+								onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+								value="#{usuarioBean.usuario.telefono}" required="true"
+								requiredMessage="Teléfono requerido" style="width:100px;" />
+							<p:message for="txtTelefono" display="icon" />
+						</p:column>
+
+						
+
+						<p:column style="border-style: hidden; width:130px;">Correo Electrónico: </p:column>
+						<p:column style="border-style: hidden;">
+							<p:inputText id="txtCorreo"
+								value="#{usuarioBean.usuario.correoElectronico}"
+								style="width:300px;" disabled="#{usuarioBean.valida}"
+								maxlength="100" required="true"
+								requiredMessage="Requerido Correo electronico"
+								validatorMessage="Correo electrónico no es válido">
+								<f:validateRegex
+									pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+							</p:inputText>
+							<p:message for="txtCorreo" display="text" />
+						</p:column>		
+						
+					</p:panelGrid>
+
+					<p:panelGrid id="panelBotones" columns="3"
+						style="padding-right: 50px; margin: 0 auto;">
+						<p:commandButton id="btnguardar" value="Guardar"
+							icon="fa fa-fw fa-floppy-o"
+							actionListener="#{usuarioBean.registrar()}" process="@form"
+							update=" @this" disabled="#{usuarioBean.estadeshabilitado}">
+
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-newwin" id="btnNuevo" value="Nuevo"
+							onclick="location.reload()">
+						</p:commandButton>
+						<p:commandButton id="btnRegresar" value="Principal"
+							icon="fa fa-fw fa-hand-o-left"
+							action="#{navegarVistasBean.principal()}" process="@this"
+							update="@this" />
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+			<!-- Script de estilos para el contenido fel formulario-->
+			<h:outputStylesheet library="css" name="buscar.css" />
+			<h:outputStylesheet library="css" name="registroUsuario.css" />
+		
+<!-- 		</ui:define> -->
+<!-- 	</ui:composition> -->
+</h:body>
+</html>

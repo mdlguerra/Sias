@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<body>
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<!-- <h:form id="frm" enctype="multipart/form-data"> -->
+			<h:form id="frm" enctype="multipart/form-data"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+				<h2 style="color: #003778; text-align: center">UNIDADES
+					ADMINISTRATIVAS - AREAS</h2>
+				<p:growl id="mensaje" autoUpdate="false" severity="info, fatal"
+					showSummary="true" showDetail="true" />
+				<p:panelGrid columns="7" style="display:block; text-align:center"
+					columnClasses="centered">
+					<p:commandButton value="Nuevo" oncomplete="PF('wdlg').show()"
+						actionListener="#{areaBean.limpiarControles()}" update="frm:dlg"
+						process="@this" />
+					<p:commandButton id="btnRegresar" value="Principal"
+						icon="fa fa-fw fa-hand-o-left"
+						action="#{navegarVistasBean.principal()}" process="@this"
+						update="@this" />
+				</p:panelGrid>
+
+				<p:dataTable id="dt" resizableColumns="true"
+					value="#{areaBean.listaArea}" var="e" widgetVar="estudiosTabla"
+					rows="15" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20" sortOrder="descending"
+					paginatorPosition="top"
+					emptyMessage="No hay ningún registro con esa opción">
+
+					<p:column headerText="Unidad Administrativa - Area" filterBy="#{e.nombre}"
+						filterMatchMode="contains" style="width:250px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<p:outputLabel value="#{e.nombre }" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{e.nombre}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Secuencial Caso" style="width:50px">
+						<p:outputLabel value="#{e.secuencial}" />
+					</p:column>
+										
+					<p:column headerText="Tipo Area1" style="width:50px">
+						<p:outputLabel value="#{areaBean.tipoArea(e.idTipoArea)}" />
+					</p:column>
+
+					<p:column exportable="false" style="width: 10px">
+						<p:commandLink actionListener="#{areaBean.mostrarData(e)}"
+							oncomplete="PF('wdlg').show()" update="frm:dlg" immediate="true"
+							process="@this">
+							<i class="fa fa-fw fa-edit"></i>
+							<!-- <p:graphicImage library="images" name="edit.jpg" /> -->
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+				<br />
+
+				<!--<p:dialog id="dlg" widgetVar="wdlg" header="#{institucionBean.tipoDialog}" modal="true"  closeOnEscape="true" resizable="false" draggable="true">  -->
+
+				<p:dialog id="dlg" widgetVar="wdlg" modal="true"
+					closeOnEscape="true" draggable="true" resizable="false"
+					positionType="absolute">
+
+					<p:fieldset legend="#{areaBean.tipoDialog}" style="width:90%">
+
+						<p:panelGrid id="pg" columns="3" tyle="margin-left: 35%">
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Institución: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:selectOneMenu id="cboInstitucion"
+									value="#{areaBean.area.institucion}" effect="fade"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="startsWith">
+									<f:selectItem itemLabel="Seleccione la Institución: ..."
+										noSelectionOption="true" />
+									<f:selectItems value="#{areaBean.listaIntitucion}" var="e"
+										itemLabel="#{e.nombre}" itemValue="#{e}" />
+									<f:ajax render="selected_item" />
+								</p:selectOneMenu>
+								<p:messages for="cboInstitucion" />
+							</p:column>
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Provincia: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:selectOneMenu id="cboProvincia"
+									value="#{areaBean.area.provincia}" effect="fade"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="startsWith">
+									<f:selectItem itemLabel="Seleccione la Provincia:..."
+										noSelectionOption="true" />
+									<f:selectItems value="#{areaBean.listaProvincia}" var="e"
+										itemLabel="#{e.nombre}" itemValue="#{e}" />
+									<f:ajax render="selected_item" />
+								</p:selectOneMenu>
+								<p:messages for="cboProvincia" />
+							</p:column>
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Cantón: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:selectOneMenu id="cboCanton" value="#{areaBean.area.canton}"
+									effect="fade" converter="omnifaces.SelectItemsConverter"
+									filter="true" filterMatchMode="startsWith">
+									<f:selectItem itemLabel="Seleccione el Cantón:..."
+										noSelectionOption="true" />
+									<f:selectItems value="#{areaBean.listaCanton}" var="e"
+										itemLabel="#{e.nombre}" itemValue="#{e}" />
+									<f:ajax render="selected_item" />
+								</p:selectOneMenu>
+								<p:messages for="cboCanton" />
+							</p:column>
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Unidad Administrativa/Area: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:inputText id="txtNombres" value="#{areaBean.area.nombre}"
+									required="true" style="width:200px; text-transform: uppercase" />
+								<p:messages for="txtNombres" display="icon" />
+							</p:column>
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;"> Nombre corto: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:inputText id="txtNombreCorto"
+									value="#{areaBean.area.nombreCorto}" required="true"
+									style="width:200px; text-transform: uppercase" />
+								<p:messages for="txtNombreCorto" display="icon" />
+							</p:column>
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Dirección: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:inputText id="txtDireccion"
+									value="#{areaBean.area.direccion}" required="true"
+									style="width:200px; text-transform: uppercase" />
+								<p:messages for="txtDireccion" display="icon" />
+							</p:column>
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;"> Siglas: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:inputText id="txtSiglas" value="#{areaBean.area.siglas}"
+									required="true" style="width:200px; text-transform: uppercase" />
+								<p:messages for="txtSiglas" display="icon" />
+							</p:column>
+							
+							
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Tipo de Area: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:selectOneMenu id="cboTipoArea"
+									value="#{areaBean.area.idTipoArea}" effect="fade"
+									converter="omnifaces.SelectItemsConverter" autoWidth="false"
+									filter="true" filterMatchMode="startsWith" tyle="width:100px">
+									<f:selectItem itemLabel="- Seleccione -" />
+									<f:selectItems value="#{areaBean.listaTipoArea}"
+										var="e" itemLabel="#{e.nombre}" itemValue="#{e.id}" />
+								</p:selectOneMenu>
+								<p:messages for="cboTipoArea" />
+							</p:column>
+							
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Area Acceso: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:selectOneMenu id="cboAreaAcceso"
+									value="#{areaBean.area.areaAcceso}" effect="fade"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="startsWith">
+									<f:selectItem itemLabel="Seleccione el Area que accede a la información: ..."
+										noSelectionOption="true" />
+									<f:selectItems value="#{areaBean.listaArea}" var="e"
+										itemLabel="#{e.nombre}" itemValue="#{e}" />
+									<f:ajax render="selected_item" />
+								</p:selectOneMenu>
+								<p:messages for="cboAreaAcceso" />
+							</p:column>
+
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Secuencial Casos por Area: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:inputText id="idSecuencial" type="number"
+									value="#{areaBean.area.secuencial}" 
+									maxlength="9" />
+								<p:messages for="idSecuencial" display="icon" />
+							</p:column>
+							
+							<p:column style="border-style: hidden;width:50px;"></p:column>
+							<p:column style="border-style: hidden; width:130px;">Dias para digitar la información: </p:column>
+							<p:column style="border-style: hidden;">
+								<p:inputText id="idDia" type="number"
+									value="#{areaBean.area.diasDigitacion}" 
+									maxlength="2" />
+								<p:messages for="idDia" display="icon" />
+							</p:column>
+						</p:panelGrid>
+
+					</p:fieldset>
+					<p:panelGrid id="pgBotones" columns="3" style="margin-left: 35%">
+						<p:commandButton value="Registrar"
+							actionListener="#{areaBean.operar('R')}" ajax="true"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('wdlg').hide()"
+							update="pg, dt"
+							rendered="#{areaBean.tipoDialog == 'Nuevo Area'}" />
+
+						<p:commandButton value="Modificar"
+							actionListener="#{areaBean.operar('M')}" ajax="true"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('wdlg').hide()"
+							update="pg, dt"
+							rendered="#{areaBean.tipoDialog == 'Modificar Area'}" />
+					</p:panelGrid>
+				</p:dialog>
+
+			</h:form>
+
+			<!-- Script de estilos para el contenido fel formulario-->
+			<h:outputStylesheet library="css" name="buscar.css" />
+			<h:outputStylesheet library="css" name="registroUsuario.css" />
+		</ui:define>
+
+	</ui:composition>
+</body>
+</html>

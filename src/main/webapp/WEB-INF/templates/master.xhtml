@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="titulo">Sis SIAS</ui:insert></title>
+	<f:event type="preRenderView"
+		listener="#{masterBean.verificarSesion()}" />
+	<h:outputStylesheet library="css" name="estilos.css" />
+</h:head>
+
+<h:body class="resolucion">
+	<div id="header">
+
+		<h:graphicImage 
+			style="background-size: 10%;" width="800"></h:graphicImage>
+
+		<ui:insert name="header">
+			<p:idleMonitor timeout="666000">
+				<p:ajax event="idle" listener="#{masterBean.timeout()}"
+					oncomplete="alert('Sesión expirada')" />
+			</p:idleMonitor>
+
+			<p:growl id="mensaje" autoUpdate="false" severity="warn, fatal"
+				showSummary="true" showDetail="true" />
+			<h:form>
+
+				<p:menubar model="#{menuBean.model}" autoDisplay="false">
+					<f:facet name="options">
+						    Bienvenido(a): #{masterBean.mostrarUsuarioLogueado()}
+                            <p:commandButton id="salir"
+							actionListener="#{masterBean.cerrarSesion()}"
+							icon="fa fa-fw fa-external-link-square"
+							action="/index?faces-redirect=true" url="/index.xhtml" />
+						<p:tooltip id="toolTipFade3" for="salir" value="Salir del Sistema"
+							trackMouse="true" />
+					</f:facet>
+				</p:menubar>
+			</h:form>
+		</ui:insert>
+	</div>
+
+
+	<div id="content" class="center_content">
+		<ui:insert name="content">
+			<p:growl id="mensaje2" autoUpdate="false" severity="warn, fatal"
+				showSummary="true" showDetail="true" />
+		</ui:insert>
+	</div>
+	<p id="bottom" style="text-align: center">
+		<h:graphicImage 
+			style="background-size: 10%;" width="800"></h:graphicImage>
+	</p>
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage value="/resources/images/ajaxloadingbar.gif"
+			style="width: 100%;"></p:graphicImage>
+	</p:dialog>
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage value="/resources/images/ajaxloadingbar.gif"
+			style="width: 100%;"></p:graphicImage>
+	</p:dialog>
+
+</h:body>
+</html>
